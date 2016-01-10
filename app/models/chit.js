@@ -7,26 +7,22 @@ var Chit= function()  {
 
   var chitKey = "chit";
 
-  this.allChitSummary = function(){
-    return featchChitForDataStore() 
-  }
-
-  this.byId= function(chitId){
-    getChit().then((allChits)=> allChits[chitId])
+  this.all = function(){
+    return featchChitForDataStore().then((value)=>JSON.parse(value)) 
   }
 
   this.addChit= function(value){
-    return data.setItem(chitKey,JSON.stringify(value))
-  }
-
-  var getChit = function(){
-    return featchChitForDataStore().then((value)=> JSON.parse(value))
+    return  this.all().
+      then((currentData)=>{
+        currentData.push(value);
+        data.setItem(chitKey,JSON.stringify(currentData))
+      })
   }
 
   var featchChitForDataStore = function(){
     return data.getItem(chitKey).
-      then((value)=> value).
-        catch(()=>{data.setItem(chitKey,"{}"); return {}})
+      then((value)=> (typeof(value)!='undefined'? value: '[]')).
+        catch(()=>{data.setItem(chitKey,"[]"); return {}})
   }
 }
 

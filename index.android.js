@@ -11,7 +11,7 @@ var {
 
 var screens = require('./app/screens')
 
-var chit = React.createClass({
+var chitApp = React.createClass({
   render() {
     return <Navigator
       initialRoute={{screen:screens.allChits,screens:screens}}
@@ -23,4 +23,4 @@ var chit = React.createClass({
 var styles = StyleSheet.create({
 });
 
-AppRegistry.registerComponent('chit', () => chit);
+AppRegistry.registerComponent('chit', () => chitApp);

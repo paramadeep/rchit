@@ -8,15 +8,30 @@ var {
   ListView,
 } = React;
 
+var chit=require('../../models/chit')
+
 var ChitList= React.createClass({
   getInitialState() { 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}); 
     return { 
-      dataSource: ds.cloneWithRows(['a','b']), 
+      dataSource: ds,
+      loaded: false
     }; 
   },
   renderRow(value){
-    return(<Text>{value}</Text>);
+    return(<Text>{value.name}</Text>);
+  },
+  fetchData(){
+    chit.all().
+      then((allChits)=>{
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(allChits)
+        })
+      }).
+        done()
+  },
+  componentDidMount() { 
+    this.fetchData(); 
   },
 
   render() {

@@ -25,7 +25,6 @@ var AddChit = React.createClass({
   },
   addNewChit(){
     var name = this.state.name;
-    debugger;
     Chit.addChit({name: name}).
       then(this.props.navigator.pop()).
         then(()=>{ Alert.alert("Added Chit")}).
