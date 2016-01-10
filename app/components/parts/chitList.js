@@ -13,8 +13,9 @@ var chit=require('../../models/chit')
 var ChitList= React.createClass({
   getInitialState() { 
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}); 
-    return { 
-      dataSource: ds,
+    return {
+      ds: ds,
+      dataSource: [],
       loaded: false
     }; 
   },
@@ -24,19 +25,18 @@ var ChitList= React.createClass({
   fetchData(){
     chit.all().
       then((allChits)=>{
+        if(this.state.dataSource.length != allChits.length){
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(allChits)
-        })
+          dataSource: allChits
+        })}
       }).
         done()
   },
-  componentDidMount() { 
-    this.fetchData(); 
-  },
 
   render() {
+    this.fetchData()
     return(
-      <ListView dataSource={this.state.dataSource} renderRow={this.renderRow} />
+      <ListView dataSource={this.state.ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow} />
     );
   }
 });
