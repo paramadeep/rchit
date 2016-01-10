@@ -14,7 +14,7 @@ var Chit= function()  {
   this.addChit= function(value){
     return  this.all().
       then((currentData)=>{
-        currentData.push(value);
+        currentData.unshift(value);
         data.setItem(chitKey,JSON.stringify(currentData))
       })
   }
