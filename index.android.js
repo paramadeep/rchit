@@ -10,12 +10,11 @@ var {
 } = React;
 
 var screens = require('./app/screens')
-
 var chitApp = React.createClass({
   render() {
     return <Navigator
-      initialRoute={{screen:screens.allChits,screens:screens}}
-      renderScene={(route,navigator) => {return route.screen(navigator,route.screens)} }
+      initialRoute={{screen:screens.allChits}}
+      renderScene={(route,navigator) => {return route.screen(navigator,route.data)} }
     />
   },
 });

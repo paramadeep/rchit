@@ -11,17 +11,21 @@ var Chit= function()  {
     return featchChitForDataStore().then((value)=>JSON.parse(value)) 
   }
 
+  this.deleteAll = function(){
+    return data.removeItem(chitKey);
+  }
+
   this.addChit= function(value){
     return  this.all().
       then((currentData)=>{
         currentData.unshift(value);
-        data.setItem(chitKey,JSON.stringify(currentData))
+        return data.setItem(chitKey,JSON.stringify(currentData))
       })
   }
 
   var featchChitForDataStore = function(){
     return data.getItem(chitKey).
-      then((value)=> (typeof(value)!='undefined'? value: '[]')).
+      then((value)=> value ? value: '[]').
         catch(()=>{data.setItem(chitKey,"[]"); return {}})
   }
 }

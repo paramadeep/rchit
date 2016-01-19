@@ -32,7 +32,7 @@ var AddChit = React.createClass({
   render() {
     return(
       <View>
-        <Text>hi</Text>
+        <TextInput onChange={this.updateName} value={this.state.name}/>
         <TextInput onChange={this.updateName} value={this.state.name}/>
         <TouchableHighlight style={styles.button} onPress={this.addNewChit}> 
           <Text>Add</Text>

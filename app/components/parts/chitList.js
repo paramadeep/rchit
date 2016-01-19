@@ -3,40 +3,20 @@
 var React = require('react-native');
 var {
   StyleSheet,
-  Text,
-  View,
   ListView,
+  Text,
 } = React;
 
-var chit=require('../../models/chit')
+var ChitRow=require('./chitRow')
+var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}); 
 
 var ChitList= React.createClass({
-  getInitialState() { 
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}); 
-    return {
-      ds: ds,
-      dataSource: [],
-      loaded: false
-    }; 
-  },
   renderRow(value){
-    return(<Text>{value.name}</Text>);
+    return(<ChitRow chit={value} navigator={this.props.navigator} screens={this.props.screens} />)
   },
-  fetchData(){
-    chit.all().
-      then((allChits)=>{
-        if(this.state.dataSource.length != allChits.length){
-        this.setState({
-          dataSource: allChits
-        })}
-      }).
-        done()
-  },
-
   render() {
-    this.fetchData()
     return(
-      <ListView dataSource={this.state.ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow} />
+      <ListView dataSource={ds.cloneWithRows(this.props.chits)} renderRow={this.renderRow} />
     );
   }
 });
